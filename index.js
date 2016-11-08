@@ -18,7 +18,7 @@ function setupConnectionTimeout(protocol) {
     ConnectTimeoutAgent.prototype.createSocket = function() {
         var s = Agent.prototype.createSocket.apply(this, arguments);
         // Set up a connect timeout if connectTimeout option is set
-        if (this.options.connectTimeout && !s.connectTimeoutTimer) {
+        if (this.options.connectTimeout && (!s || !s.connectTimeoutTimer)) {
             s.connectTimeoutTimer = setTimeout(function() {
                 var e = new Error('ETIMEDOUT');
                 e.code = 'ETIMEDOUT';
